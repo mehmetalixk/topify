@@ -1,7 +1,10 @@
 import spotipy
 import os
 from spotipy.oauth2 import SpotifyOAuth
-
+from PIL import Image
+import requests
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
 
 client_id = os.getenv('SPOTIPY_CLIENT_ID')
 client_secret = os.getenv('SPOTIPY_CLIENT_SECRET')
@@ -21,4 +24,5 @@ while results['next']:
     albums.extend(results['items'])
 
 for album in albums:
-    print(album['name'])
+    img = Image.open(requests.get(album['images'][0]['url'], stream=True).raw)
+    img.show()
