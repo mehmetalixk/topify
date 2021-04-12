@@ -1,6 +1,6 @@
 <h1 align="center">Topify</h1><br><br>
 
-<p align="center"><img src="logof.png" style="width:70%"/></p>
+<p align="center"><img src="logof.png" style="width:50%"/></p>
 <p>Our aim is to predict the possibility of a song if it will be on Spotify’s top list.</p><br>
 
 <p>As for why we chose this problem, being able to predict whether or not anything would be famous ahead of time is a challenging problem in any industry. It has also recently become a very significant topic in the dynamic music industry. Because of the widespread use of music apps (Spotify, SoundCloud, Deezer), data can be easily accessed and people’s listening habits can be easily monitored.</p><br>
@@ -18,7 +18,7 @@
 <a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier">Random Forest Classifier</a>: Will be used as meta estimator.<br>
 </p>
 <br>
-<p><b>Related Papers:</b>
+<p><b>Related Papers:</b><br>
 <a href="https://towardsdatascience.com/what-makes-a-song-likeable-dbfdb7abe404">What Makes A Song Likeable?</a><br>
 <a href="https://opendatascience.com/a-machine-learning-deep-dive-into-my-spotify-data/">A Machine Learning Deep Dive into Spotify Data</a><br>
 <a href="https://kth.diva-portal.org/smash/get/diva2:1214146/FULLTEXT01.pdf">Predicting Hit Songs</a><br>
