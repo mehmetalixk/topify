@@ -9,7 +9,7 @@
 
 <p>We will collect our data from mostly Spotify's official top lists from various years. Also in our data set, we will have songs that haven’t been on Spotify’s top list. We will use this data to train our model and test it. Before training our model, we are planning to shuffle the songs to increase accuracy.</p><br>
 
-<p>We’ll have the attributes of songs such as energy, beats per minute, danceability, duration, genre analysis, release year, dB(loudness), valence, commonly used words, and acousticness.</p><br>
+<p>We’ll have the attributes of songs such as energy, beats per minute, danceability, duration, release year, dB(loudness), valence, and acousticness.</p><br>
 <p>
 <b>We plan to use:</b><br>
 <a href="https://github.com/plamere/spotipy">Spotipy</a>: For Spotify data collecting<br>
