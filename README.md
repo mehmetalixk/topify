@@ -1,6 +1,6 @@
-<h1 style="text-align:center">Topify</h1><br><br>
+<h1 align="center">Topify</h1><br><br>
 
-<img src="logof.png"/>
+<img align="center" src="logof.png"/>
 <p>Our aim is to predict the possibility of a song if it will be on Spotify’s top list.</p><br>
 
 <p>As for why we chose this problem, being able to predict whether or not anything would be famous ahead of time is a challenging problem in any industry. It has also recently become a very significant topic in the dynamic music industry. Because of the widespread use of music apps (Spotify, SoundCloud, Deezer), data can be easily accessed and people’s listening habits can be easily monitored.</p><br>
