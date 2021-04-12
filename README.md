@@ -18,11 +18,11 @@
 <a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier">Random Forest Classifier</a>: Will be used as meta estimator.<br>
 </p>
 
-<p><b>Related Papers:</b>
+<p><b>Related Papers:</b></p>
 [What Makes A Song Likeable?](https://towardsdatascience.com/what-makes-a-song-likeable-dbfdb7abe404)<br>
 [A Machine Learning Deep Dive into Spotify Data](https://opendatascience.com/a-machine-learning-deep-dive-into-my-spotify-data/)<br>
 [Predicting Hit Songs](https://kth.diva-portal.org/smash/get/diva2:1214146/FULLTEXT01.pdf)<br>
-</p>
+
 
 <b>Authors:</b><br>
 Mehmet Ali Korkmaz<br>
