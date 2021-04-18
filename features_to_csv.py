@@ -2,7 +2,7 @@ import spotipy
 import csv
 from spotipy.oauth2 import SpotifyClientCredentials
 
-auth_manager = SpotifyCelintCredentials()
+auth_manager = SpotifyClientCredentials()
 sp = spotipy.Spotify(auth_manager=auth_manager)
 
 playlist_items = sp.playlist_items("37i9dQZF1DWVRSukIED0e9") # Get tracks from given playlist id
