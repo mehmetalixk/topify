@@ -1,3 +1,10 @@
+import spotipy
+import csv
+from spotipy.oauth2 import SpotifyClientCredentials
+
+auth_manager = SpotifyCelintCredentials()
+sp = spotipy.Spotify(auth_manager=auth_manager)
+
 playlist_items = sp.playlist_items("37i9dQZF1DWVRSukIED0e9") # Get tracks from given playlist id
 
 tracks = open('tracks.csv', 'w') # Change 'w' to 'a' to expand csv file
