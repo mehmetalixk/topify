@@ -77,4 +77,4 @@ def separation(toptracks_path, tracks_path):
             out_file.write(line)
 
 
-
+remove_dup("toptracks.csv")
