@@ -7,7 +7,7 @@ sp = spotipy.Spotify(auth_manager=auth_manager)
 
 playlist_items = sp.playlist_items("37i9dQZF1DWVRSukIED0e9") # Get tracks from given playlist id
 
-tracks = open('tracks.csv', 'w') # Change 'w' to 'a' to expand csv file
+tracks = open('toptracks.csv', 'w') # Change 'w' to 'a' to expand csv file
 
 tracks_writer = csv.writer(tracks)
 tracks_writer.writerow(['Artist name', 'Song name', 'Danceability', 'Energy', 'Key', 'Loudness', 'Mode',
