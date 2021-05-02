@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 toptracks=  pd.read_csv("unique_toptracks.csv")
 toptracks["TopList"]=1 #if the song is i a top list value is 1
 #print(toptracks.head())
-normaltracks= pd.read_csv("seperated_unique_tracks.csv")
+normaltracks= pd.read_csv("separated_unique_tracks.csv")
 normaltracks["TopList"]= 0
 #print(normaltracks.head())
 tracks=toptracks.append(normaltracks, ignore_index=True) #all tracks
