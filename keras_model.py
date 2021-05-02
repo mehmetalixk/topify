@@ -62,7 +62,7 @@ model.compile(optimizer="adam", loss='sparse_categorical_crossentropy', metrics=
 # batch size
 batch_size = 300
 # maximum number of training epochs
-max_epochs = 6
+max_epochs = 60
 
 # fit the model
 # the train, validation and test data are not iterable
