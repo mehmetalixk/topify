@@ -18,11 +18,15 @@ tracks = tracks.sample(frac=1)  # shuffle the data
 tracks.drop(["Artist name", "Song name", "Track URI", "Key", "Mode", "Year", "Duration(ms)"], axis=1,
             inplace=True)  # drop categorical features
 
-#
+tracks = pd.read_csv("finaltracks.csv")
+tracks = tracks.sample(frac=1)
 
-unscaled_inputs = tracks.iloc[:, 0:-1]
+unscaled_inputs = tracks.iloc[:, 1:-1]
 toplist = tracks.iloc[:, [-1]]
-scaled_inputs = preprocessing.scale(unscaled_inputs)
+tracks = unscaled_inputs
+tracks = (tracks - tracks.min(axis=0)) / (tracks.max(axis=0) - tracks.min(axis=0))
+scaled_inputs = tracks * (tracks.max() - tracks.min()) + tracks.min()
+
 
 samples_count = scaled_inputs.shape[0]
 # split data into test,validation and train data
@@ -48,25 +52,26 @@ test_targets = toplist[train_samples_count + validation_samples_count:].astype(n
 input_size = 9  # count of features
 output_size = 2  # count of targets
 # Same hidden layer size for both hidden layers
-hidden_layer_size = 50  # counts of neurons
+hidden_layer_size = 5  # counts of neurons
 
 # the model
 model = tf.keras.Sequential([
     # tf.keras.layers.Dense is to output = activation(dot(input, weight) + bias)
     # hidden_layer_size and the activation function is important
     tf.keras.layers.Dense(hidden_layer_size, activation='relu'),  # 1st hidden layer
+    tf.keras.layers.Dropout(0.5),
     tf.keras.layers.Dense(hidden_layer_size, activation='relu'),  # 2nd hidden layer
     tf.keras.layers.Dense(hidden_layer_size, activation='relu'),  # 3nd hidden layer
+
     # activate it with softmax
     tf.keras.layers.Dense(output_size, activation='softmax')  # output layer
 ])
-
 model.compile(optimizer="adam", loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
 # batch size
-batch_size = 300
+batch_size = 3
 # maximum number of training epochs
-max_epochs = 60
+max_epochs = 600
 
 # fit the model
 # the train, validation and test data are not iterable
@@ -78,7 +83,7 @@ history = model.fit(train_inputs,  # train inputs
                     # task here is to check if val_loss is increasing
                     # callbacks=[early_stopping], # early stopping
                     validation_data=(validation_inputs, validation_targets),  # validation data
-                    verbose=2  # making sure we get enough information about the training process
+                    verbose=2,  # making sure we get enough information about the training process
                     )
 
 # Get training and test loss histories
@@ -98,3 +103,4 @@ print(plt.show())
 
 test_loss, test_accuracy = model.evaluate(test_inputs, test_targets)
 print('\nTest loss: {0:.2f}. Test accuracy: {1:.2f}%'.format(test_loss, test_accuracy * 100.))
+
