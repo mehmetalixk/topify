@@ -1,0 +1,3 @@
+Loss58.761, Accuracy 68.385, F1_score72.849, Precision64.529, Recall85.044
+Loss: Binary Crossentropy
+TP: 1621, FN: 392, FP: 902, TN: 1197
