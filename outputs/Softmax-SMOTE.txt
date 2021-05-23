@@ -1,0 +1,3 @@
+Loss58.392, Accuracy 68.020, F1_score65.168, Precision48.789, Recall100.000
+Loss: Sparse Categorical Crossentropy
+TP: 1727, FN: 341, FP: 952, TN: 1092

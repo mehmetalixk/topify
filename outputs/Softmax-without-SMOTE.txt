@@ -1,0 +1,2 @@
+Loss48.753, Accuracy 80.829, F1_score31.531, Precision19.132, Recall100.000
+TP: 1, FN: 509, FP: 1, TN: 2071
