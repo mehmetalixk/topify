@@ -1,35 +1,12 @@
 import numpy as np
-import pandas as pd
 import random
 import matplotlib.pyplot as plt
-import keras.backend as K
 from keras.models import Sequential, Model
 from keras.layers import Input, Dense, Dropout, Lambda
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
-
-
-# Custom function to calculate recall value
-def recall_m(y_true, y_predict):
-    true_positives = K.sum(K.round(K.clip(y_true * y_predict, 0, 1)))
-    possible_positives = K.sum(K.round(K.clip(y_true, 0, 1)))
-    recall_val = true_positives / (possible_positives + K.epsilon())
-    return recall_val
-
-
-# Custom function to calculate precision value
-def precision_m(y_true, y_predict):
-    true_positives = K.sum(K.round(K.clip(y_true * y_predict, 0, 1)))
-    predicted_positives = K.sum(K.round(K.clip(y_predict, 0, 1)))
-    precision_val = true_positives / (predicted_positives + K.epsilon())
-    return precision_val
-
-
-# Custom function to calculate f1 score
-def f1_m(y_true, y_predict):
-    precision_val = precision_m(y_true, y_predict)
-    recall_val = recall_m(y_true, y_predict)
-    return 2 * ((precision_val * recall_val) / (precision_val + recall_val + K.epsilon()))
+from metrics import *
+from data_encode import *
 
 
 # Function to create pairs of input data with respect to one hot encoded label
@@ -78,17 +55,7 @@ def eucl_dist_output_shape(shapes):
     return shape1[0], 1
 
 
-# Read data from respective csv files
-toptracks = pd.read_csv("unique_toptracks.csv")  # This section is for unbalanced data
-toptracks["TopList"] = 1
-normaltracks = pd.read_csv("separated_unique_tracks.csv")
-normaltracks["TopList"] = 0
-tracks = toptracks.append(normaltracks, ignore_index=True)
-tracks.drop(["Artist name", "Song name", "Track URI", "Key", "Mode", "Year", "Duration(ms)"], axis=1,
-            inplace=True)
-# tracks = pd.read_csv("finaltracks.csv") # This section is for balanced data
-
-tracks = tracks.sample(frac=1)  # Randomize data
+tracks = get_shuffled_data()
 # Normalize input values
 tracks = (tracks - tracks.min(axis=0)) / (tracks.max(axis=0) - tracks.min(axis=0))
 tracks = tracks * (tracks.max() - tracks.min()) + tracks.min()
