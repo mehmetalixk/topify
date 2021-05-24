@@ -3,8 +3,9 @@ import random
 import matplotlib.pyplot as plt
 from keras.models import Sequential, Model
 from keras.layers import Input, Dense, Dropout, Lambda
-from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
+from sklearn.model_selection import train_test_split
+
 from metrics import *
 from data_encode import *
 
@@ -37,8 +38,6 @@ def create_base_network(input_size):
     model0.add(Dense(units=128, activation='relu'))
     model0.add(Dropout(rate=0.5))
     model0.add(Dense(units=128, activation='relu'))
-    model0.add(Dropout(rate=0.5))
-    model0.add(Dense(units=128, activation='relu'))
 
     return model0
 
@@ -55,22 +54,32 @@ def eucl_dist_output_shape(shapes):
     return shape1[0], 1
 
 
-tracks = get_shuffled_data()
-# Normalize input values
+tracks = pd.read_csv("../data/finaltracks.csv")
+tracks = tracks.sample(frac=1, random_state=42)
+toplist = tracks.iloc[:, [-1]]
+toplist = toplist.to_numpy()
+toplist = toplist.reshape(-1)
+tracks = tracks.iloc[:, 1:-1]
 tracks = (tracks - tracks.min(axis=0)) / (tracks.max(axis=0) - tracks.min(axis=0))
 tracks = tracks * (tracks.max() - tracks.min()) + tracks.min()
 
-tracks = tracks.to_numpy()  # Turn pandas.dataframe dataset to numpy array
-labels = np.copy(tracks[:, -1]).astype(int)  # Get last column of the data
-tracks = np.delete(tracks, 9, 1)  # Delete last column of the data
+X = tracks.to_numpy()  # Turn pandas.dataframe dataset to numpy array
+y = toplist  # Get last column of the data
 
-X = tracks  # Dataset
-y = labels  # Targets
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.1, random_state=42)  # Split 10% of the data for test data
+samples_count = X.shape[0]
+
+# Get uniform test data
+test_tracks = get_test_data()
+y_test = test_tracks.iloc[:, [-1]]  # Get last column of the data
+y_test = y_test.to_numpy()
+y_test = y_test.reshape(-1)
+test_tracks = test_tracks.iloc[:, 0:-1]
+test_tracks = (test_tracks - test_tracks.min(axis=0)) / (test_tracks.max(axis=0) - test_tracks.min(axis=0))
+test_tracks = test_tracks * (test_tracks.max() - test_tracks.min()) + test_tracks.min()
+X_test = test_tracks.to_numpy()  # Turn pandas.dataframe dataset to numpy array
 
 X_train, X_val, y_train, y_val = train_test_split(
-    X_train, y_train, test_size=0.1, random_state=42)  # Split remaining 10% of the data for validation data
+    X, y, test_size=0.1, random_state=42)  # Split remaining 10% of the data for validation data
 
 input_shape = X_train.shape[1:][0]  # Get feature count
 num_classes = 2  # Number of classes
@@ -100,7 +109,7 @@ model = Model(inputs=[input_a, input_b], outputs=distance)
 
 model.compile(optimizer="adam", loss='binary_crossentropy', metrics=['acc', f1_m, precision_m, recall_m])
 
-history = model.fit(x=[tr_pairs[:, 0], tr_pairs[:, 1]], y=tr_y, batch_size=256, epochs=200,
+history = model.fit(x=[tr_pairs[:, 0], tr_pairs[:, 1]], y=tr_y, batch_size=64, epochs=200,
                     validation_data=([val_pairs[:, 0], val_pairs[:, 1]], val_y))
 
 # Plot the graph of validation and training
@@ -112,6 +121,7 @@ plt.legend(['Training Loss', 'Validation Loss'])
 plt.xlabel('Epoch')
 plt.ylabel('Loss')
 plt.show()
+
 
 y_pred = model.predict([te_pairs[:, 0], te_pairs[:, 1]])  # Predict the test data
 y_pred = y_pred.reshape(-1)  # Reshape it from 2D to 1D

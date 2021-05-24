@@ -12,7 +12,7 @@ def get_shuffled_data():
     normal_tracks["TopList"] = 0
 
     tracks = top_tracks.append(normal_tracks, ignore_index=True)  # all tracks
-    tracks = tracks.sample(frac=1)  # shuffle the data
+    tracks = tracks.sample(frac=1, random_state=42)  # shuffle the data
     tracks.drop(["Artist name", "Song name", "Track URI", "Key", "Mode", "Year", "Duration(ms)"], axis=1,
                 inplace=True)  # drop categorical features
 
@@ -32,6 +32,15 @@ def get_tracks():
     return df.values
 
 
+def get_test_data():
+    tracks = pd.read_csv("../data/test.csv")
+    tracks = tracks.sample(frac=1, random_state=42)
+    tracks.drop(["Artist name", "Song name", "Track URI", "Key", "Mode", "Year", "Duration(ms)"], axis=1,
+                inplace=True)
+
+    return tracks
+
+
 def print_samples(samples):
     counter = Counter(samples)
     for k, v in counter.items():
@@ -43,7 +52,8 @@ def print_samples(samples):
     pyplot.show()
 
 
-data = get_tracks()
-X, y = data[:, :-2], data[:, -2]
-y = LabelEncoder().fit_transform(y)
-print_samples(y)
+if __name__ == "__main__":
+    data = get_tracks()
+    X, y = data[:, :-2], data[:, -2]
+    y = LabelEncoder().fit_transform(y)
+    print_samples(y)
